@@ -857,10 +857,13 @@ files:
 - name: hypercar/tickets/templates/processing.html
   visible: true
   learner_created: true
+- name: hypercar/tickets/templates/next.html
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/85/stages/473/implement
 status: Solved
 feedback:
   message: Congratulations! Continue on <a href="https://hyperskill.org/projects/85/stages/473/implement">JetBrains
     Academy</a>
   time: Wed, 04 Nov 2020 17:40:50 UTC
-record: -1
+record: 4

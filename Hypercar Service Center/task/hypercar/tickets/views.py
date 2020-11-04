@@ -58,6 +58,30 @@ class ProcessingView(View):
         }
         return render(request, "processing.html", context=context)
 
+    def post(self, request, *args, **kwargs):
+        queue_manager = QueueManagerFactory.get_queue_manager()
+        queue_manager.process_next_request()
+        no_oil, no_tire, no_diagnostic = queue_manager.get_queue_lengths()
+        context = {
+            "no_oil": no_oil,
+            "no_tire": no_tire,
+            "no_diagnostic": no_diagnostic
+        }
+        return render(request, "processing.html", context=context)
+
+
+class NextView(View):
+    def get(self, request, *args, **kwargs):
+        queue_manager = QueueManagerFactory.get_queue_manager()
+        next_number = queue_manager.get_next_number()
+        if next_number:
+            context = {
+                "next_number": next_number
+            }
+        else:
+            context = {}
+        return render(request, "next.html", context=context)
+
 
 class ResetView(View):
     def get(self, request, *args, **kwargs):

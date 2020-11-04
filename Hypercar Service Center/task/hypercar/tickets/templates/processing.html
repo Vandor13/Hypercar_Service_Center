@@ -8,5 +8,9 @@
     <div>Change oil queue: {{no_oil}}</div>
     <div>Inflate tires queue: {{no_tire}}</div>
     <div>Get diagnostic queue: {{no_diagnostic}}</div>
+
+    <form method="post">{% csrf_token %}
+      <button type="submit">Process next</button>
+    </form>
 </body>
 </html>

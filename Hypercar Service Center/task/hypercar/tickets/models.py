@@ -55,6 +55,7 @@ class QueueManager:
         self.tires_queue = deque()
         self.diagnostic_queue = deque()
         self.current_ticket_number = 1
+        self.now_serving = None
         for ticket in Ticket.objects.filter(service_type="oil"):
             self.oil_queue.appendleft(ticket)
         for ticket in Ticket.objects.filter(service_type="tire"):
@@ -98,3 +99,18 @@ class QueueManager:
         new_ticket.save()
         self.add_item_to_queue(service_type, ticket_number)
         return ticket_number, wait_time
+
+    def get_next_number(self):
+        return self.now_serving
+
+    def process_next_request(self):
+        if len(self.oil_queue) > 0:
+            self.now_serving = self.oil_queue.pop()
+        elif len(self.tires_queue) > 0:
+            self.now_serving = self.tires_queue.pop()
+        elif len(self.diagnostic_queue) > 0:
+            self.now_serving = self.diagnostic_queue.pop()
+        else:
+            self.now_serving = None
+
+
