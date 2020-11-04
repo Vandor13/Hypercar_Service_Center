@@ -86,6 +86,9 @@ class QueueManager:
         else:
             self.diagnostic_queue.appendleft(ticket_number)
 
+    def get_queue_lengths(self):
+        return len(self.oil_queue), len(self.tires_queue), len(self.diagnostic_queue)
+
     def get_ticket(self, service_type):
         wait_time = self.calculate_wait_time(service_type)
         ticket_number = self.current_ticket_number

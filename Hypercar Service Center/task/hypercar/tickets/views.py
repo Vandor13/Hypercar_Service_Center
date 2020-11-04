@@ -47,6 +47,18 @@ class DiagnosticView(View):
         return render(request, "ticket.html", context=context)
 
 
+class ProcessingView(View):
+    def get(self, request, *args, **kwargs):
+        queue_manager = QueueManagerFactory.get_queue_manager()
+        no_oil, no_tire, no_diagnostic = queue_manager.get_queue_lengths()
+        context = {
+            "no_oil": no_oil,
+            "no_tire": no_tire,
+            "no_diagnostic": no_diagnostic
+        }
+        return render(request, "processing.html", context=context)
+
+
 class ResetView(View):
     def get(self, request, *args, **kwargs):
         Ticket.objects.all().delete()
